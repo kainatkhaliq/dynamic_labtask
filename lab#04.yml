@@ -1,0 +1,24 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      # Update system and install NGINX
+      - sudo apt-get update
+      - sudo apt-get install -y nginx
+  build:
+    commands:
+      # Echo build date
+      - echo "Build started on: $(date)"
+      # Copy the static website files to the NGINX directory
+      - sudo cp index.html /var/www/html/
+  post_build:
+    commands:
+      # Restart NGINX to load the new files
+      - sudo systemctl restart nginx
+      - echo "NGINX is running with the updated static website."
+
+artifacts:
+  files:
+    # Output the final static file as an artifact
+    - /var/www/html/index.html
